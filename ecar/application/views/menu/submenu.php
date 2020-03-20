@@ -9,6 +9,7 @@
                                 </div>
                                 <div class="card-content">
                                     <h4 class="card-title">Table <?= $title; ?></h4> <button data-toggle="modal" data-target="#newroleModal" class="btn btn-just-icon btn-round btn-success">Add Data<i class="fa fa-plus"></i></button>
+                                    <?= $this->session->flashdata('message'); ?>
                                     <div class="toolbar">
                                         <!--        Here you can write extra buttons/actions for the toolbar              -->
                                     </div>
@@ -38,10 +39,6 @@
                                             <?php $i = 1; ?>
                                             <?php foreach ($subMenu as $m) :
                                                 $id_user_sub_menu = $m['id_user_sub_menu'];
-                                                $id_menu = $m['menu'];
-                                                $title = $m['title'];
-                                                $url = $m['url'];
-                                                $icon = $m['icon'];
                                             ?>
                                                 <tr>
                                                     <td><?= $i; ?></td>
@@ -83,16 +80,36 @@
                 <h5 class="modal-title" id="newroleModal">Create New Data</h5>
                 </button>   
             </div>
-            <form action="<?= base_url('menu'); ?>" method="post">
+            <form action="<?= base_url('menu/submenu'); ?>" method="post">
                 <div class="modal-body">
+                <div class="form-group">
+                    <label for="">id User SubMenu</label>
+                    <input type="text" class="form-control" id="id_submenu" name="id_submenu" placeholder="Masukkan id_submenu" value="<?= $id_user; ?>">
+                </div>
                     <div class="form-group">
                         <label for="">menu</label>
-                        <input type="text" class="form-control" id="menu" name="menu" placeholder="Masukkan menu">
+                        <select name="id_menu" id="id_menu" class="form-control">
+                        <?php foreach($menu as $m) : ?>
+                            <option value="<?= $m['id_menu'] ?>"><?= $m['menu']; ?></option>
+                        <?php endforeach; ?>
+                        </select>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="">title</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Masukkan title">
+                    </div>
+                    <div class="form-group">
+                        <label for="">url</label>
+                        <input type="text" class="form-control" id="url" name="url" placeholder="Masukkan url">
+                    </div>
+                    <div class="form-group">
+                        <label for="">icon</label>
+                        <input type="text" class="form-control" id="icon" name="icon" placeholder="Masukkan icon">
+                    </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                     <button type="submit" class="btn btn-success">Simpan Data</button>
+                </div>
                 </div>
             </form>
         </div>

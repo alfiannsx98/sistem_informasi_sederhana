@@ -18,11 +18,11 @@ class Menu extends CI_Controller
         $k = "MN";
         $id_menu = $k . $d . ($field + 1);
 
-        $query_user_sub_menu = $this->db->query("SELECT * FROM user_sub_menu");
-        $field = $query_user_sub_menu->num_rows();
-        $d = date('dm', time());
-        $k = "USM";
-        $id_user_sub_menu = $k . $d . ($field + 1);
+        // $query_user_sub_menu = $this->db->query("SELECT * FROM user_sub_menu");
+        // $field = $query_user_sub_menu->num_rows();
+        // $d = date('dm', time());
+        // $k = "USM";
+        // $id_user_sub_menu = $k . $d . ($field + 1);
 
         $data['title'] = 'Management Menu';
         $data['user'] = $this->db->get_where('user', [
@@ -90,6 +90,15 @@ class Menu extends CI_Controller
 
     public function submenu()
     {
+
+        $query_user_sub_menu = $this->db->query("SELECT * FROM user_sub_menu");
+        $field = $query_user_sub_menu->num_rows();
+        $d = date('dm', time());
+        $k = "USM";
+        $id_user_sub_menu = $k . $d . ($field + 2);
+        
+        $data['id_user'] = $id_user_sub_menu;
+
         $data['title'] = 'Sub Menu Management';
         $data['user'] = $this->db->get_where('user', ['email' =>
 
@@ -111,11 +120,12 @@ class Menu extends CI_Controller
             $this->load->view('templates/footer');
         } else {
             $data = [
+                'id_user_sub_menu' => $this->input->post('id_submenu'),
+                'id_menu' => $this->input->post('id_menu'),
                 'title' => $this->input->post('title'),
-                'menu_id' => $this->input->post('menu_id'),
                 'url' => $this->input->post('url'),
                 'icon' => $this->input->post('icon'),
-                'is_active' => $this->input->post('is_active')
+                'is_active' => 1
             ];
             $this->db->insert('user_sub_menu', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data Berhasil Disimpan</div>');
